@@ -427,8 +427,9 @@ type BuilderBroadcastResponse struct {
 
 // sendPrivateTransaction
 type FlashbotsSendPrivateTransactionRequest struct {
-	Tx          string                         `json:"tx"`
-	Preferences *FlashbotsPrivateTxPreferences `json:"preferences,omitempty"`
+	Tx             string                         `json:"tx"`
+	Preferences    *FlashbotsPrivateTxPreferences `json:"preferences,omitempty"`
+	MaxBlockNumber *string                        `json:"maxBlockNumber,omitempty"`
 }
 
 type FlashbotsPrivateTxPreferences struct {
