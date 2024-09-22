@@ -634,9 +634,29 @@ func (rpc *FlashbotsRPC) FlashbotsCallBundle(privKey *ecdsa.PrivateKey, param Fl
 	return res, err
 }
 
+// https://docs.flashbots.net/flashbots-auction/searchers/advanced/rpc-endpoint#eth_callbundle
+func (rpc *FlashbotsRPC) FlashbotsCallBundleNoSignature(param FlashbotsCallBundleParam) (res FlashbotsCallBundleResponse, err error) {
+	rawMsg, err := rpc.Call("eth_callBundle", param)
+	if err != nil {
+		return res, err
+	}
+	err = json.Unmarshal(rawMsg, &res)
+	return res, err
+}
+
 // https://docs.flashbots.net/flashbots-auction/searchers/advanced/rpc-endpoint/#eth_sendbundle
 func (rpc *FlashbotsRPC) FlashbotsSendBundle(privKey *ecdsa.PrivateKey, param FlashbotsSendBundleRequest) (res FlashbotsSendBundleResponse, err error) {
 	rawMsg, err := rpc.CallWithFlashbotsSignature("eth_sendBundle", privKey, param)
+	if err != nil {
+		return res, err
+	}
+	err = json.Unmarshal(rawMsg, &res)
+	return res, err
+}
+
+// https://docs.flashbots.net/flashbots-auction/searchers/advanced/rpc-endpoint/#eth_sendbundle
+func (rpc *FlashbotsRPC) FlashbotsSendBundleNoSignature(param FlashbotsSendBundleRequest) (res FlashbotsSendBundleResponse, err error) {
+	rawMsg, err := rpc.Call("eth_sendBundle", param)
 	if err != nil {
 		return res, err
 	}
