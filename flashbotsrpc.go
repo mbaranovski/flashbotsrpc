@@ -63,13 +63,14 @@ func New(url string, options ...func(rpc *FlashbotsRPC)) *FlashbotsRPC {
 		Timeout: 30 * time.Second,
 	}
 
+	for _, option := range options {
+		option(rpc)
+	}
+
 	rpc.client = &http.Client{
 		Timeout: rpc.Timeout,
 	}
 	// this way if client is set explicitly it overwrites timeout preferences set above
-	for _, option := range options {
-		option(rpc)
-	}
 	return rpc
 }
 
@@ -784,7 +785,7 @@ func NewBuilderBroadcastRPC(urls []string, options ...func(rpc *BuilderBroadcast
 		urls:    urls,
 		log:     log.New(os.Stderr, "", log.LstdFlags),
 		Headers: make(map[string]string),
-		Timeout: 30 * time.Second,
+		Timeout: 10 * time.Second,
 	}
 	for _, option := range options {
 		option(rpc)
